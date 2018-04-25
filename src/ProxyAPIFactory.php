@@ -8,6 +8,9 @@
 
 namespace ProxyAPI;
 
+use ProxyAPI\Proxy\IProxy;
+use ProxyAPI\Proxy\Proxy6;
+
 
 /**
  * Class ProxyAPI

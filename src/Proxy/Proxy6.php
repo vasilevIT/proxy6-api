@@ -6,9 +6,8 @@
  * Time: 19:56
  */
 
-namespace ProxyAPI;
+namespace ProxyAPI\Proxy;
 
-use InstagramAmAPI\Transport\ITransport;
 
 /**
  * Class Proxy6
@@ -16,15 +15,6 @@ use InstagramAmAPI\Transport\ITransport;
  */
 class Proxy6 implements IProxy
 {
-
-    /**
-     * @param ITransport $transport
-     * @return mixed
-     */
-    public function setTransport(ITransport $transport)
-    {
-        // TODO: Implement setTransport() method.
-    }
 
     /**
      * @param int $count
