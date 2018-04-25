@@ -11,6 +11,7 @@ spl_autoload_register(function ($class) {
     $class = str_replace("ProxyAPI", "src", $class);
     $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
     $class .= ".php";
+    $class = __DIR__ . "/../" . $class;
     if (file_exists($class)) {
         require_once $class;
     }

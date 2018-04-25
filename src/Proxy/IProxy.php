@@ -17,6 +17,12 @@ interface IProxy
 {
 
     /**
+     * @param string $api_key
+     * @return mixed
+     */
+    public function setApiKey(string $api_key);
+
+    /**
      * @param int $count
      * @param int $period
      * @param int $version

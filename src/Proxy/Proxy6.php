@@ -8,6 +8,11 @@
 
 namespace ProxyAPI\Proxy;
 
+use ProxyAPI\Request\Request;
+use ProxyAPI\Response\CheckResponse;
+use ProxyAPI\Response\GetPriceResponse;
+use ProxyAPI\Response\ProxyListResponse;
+
 
 /**
  * Class Proxy6
@@ -15,6 +20,17 @@ namespace ProxyAPI\Proxy;
  */
 class Proxy6 implements IProxy
 {
+    /** @var  string */
+    private $api_key;
+
+    /**
+     * @param string $api_key
+     * @return void
+     */
+    public function setApiKey(string $api_key)
+    {
+        $this->api_key = $api_key;
+    }
 
     /**
      * @param int $count
@@ -22,9 +38,19 @@ class Proxy6 implements IProxy
      * @param int $version
      * @return mixed
      */
-    public function getPrice(int $count, int $period, $version = 4)
+    public function getPrice(int $count, int $period, $version = ProxyType::PROXY_TYPE_V4)
     {
-        // TODO: Implement getPrice() method.
+        $params = [
+            'count' => $count,
+            'period' => $period,
+            'version' => $version
+        ];
+        $params = array_filter($params);
+        $request = new Request();
+        $request->init($this->api_key . "/getprice/", $params);
+        $response = $request->send();
+        $response = new GetPriceResponse($response);
+        return $response;
     }
 
     /**
@@ -32,16 +58,25 @@ class Proxy6 implements IProxy
      * @param int $version
      * @return mixed
      */
-    public function getCount($country, $version = 4)
+    public function getCount($country, $version = ProxyType::PROXY_TYPE_V4)
     {
-        // TODO: Implement getCount() method.
+        $params = [
+            'country' => $country,
+            'version' => $version
+        ];
+        $params = array_filter($params);
+        $request = new Request();
+        $request->init($this->api_key . "/getcount/", $params);
+        $response = $request->send();
+        $response = new GetCountResponse($response);
+        return $response;
     }
 
     /**
      * @param int $version
      * @return mixed
      */
-    public function getCountry($version = 4)
+    public function getCountry($version = ProxyType::PROXY_TYPE_V4)
     {
         // TODO: Implement getCountry() method.
     }
@@ -53,7 +88,16 @@ class Proxy6 implements IProxy
      */
     public function getProxy($state = "", $description = "")
     {
-        // TODO: Implement getProxy() method.
+        $params = [
+            'state' => $state,
+            'descr' => $description
+        ];
+        $params = array_filter($params);
+        $request = new Request();
+        $request->init($this->api_key . "/getproxy/", $params);
+        $response = $request->send();
+        $response = new ProxyListResponse($response);
+        return $response;
     }
 
     /**
@@ -117,6 +161,13 @@ class Proxy6 implements IProxy
      */
     public function check($ids)
     {
-        // TODO: Implement check() method.
+        $params = [
+            'ids' => $ids
+        ];
+        $request = new Request();
+        $request->init($this->api_key . "/check/", $params);
+        $response = $request->send();
+        $response = new CheckResponse($response);
+        return $response;
     }
 }

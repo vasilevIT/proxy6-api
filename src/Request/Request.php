@@ -8,8 +8,9 @@
 
 namespace ProxyAPI\Request;
 
-use InstagramAmAPI\Transport\CurlTransport;
-use InstagramAmAPI\Transport\ITransport;
+use ProxyAPI\Transport\CurlTransport;
+use ProxyAPI\Transport\ITransport;
+
 
 /**
  * Class Request
@@ -26,8 +27,6 @@ class Request
     protected $data;
     /** @var array */
     private $headers;
-    /** @var  string */
-    private $api_key;
 
     /**
      * Request constructor.
@@ -38,15 +37,6 @@ class Request
         $this->transport = new CurlTransport();
         $this->data = $data;
         $this->headers = false;
-    }
-
-
-    /**
-     * @param mixed $api_key
-     */
-    public function setApiKey($api_key)
-    {
-        $this->api_key = $api_key;
     }
 
     /**
@@ -63,7 +53,7 @@ class Request
      * @param string $url
      * @param null|array $params
      */
-    protected function init($url = "", $params = null)
+    public function init($url = "", $params = null)
     {
         $full_url = $this->base_url . $url;
 
@@ -176,7 +166,6 @@ class Request
      */
     public function send()
     {
-        $this->init();
         $this->preRequest();
         $this->initHeaders();
         $result = $this->transport->send();
