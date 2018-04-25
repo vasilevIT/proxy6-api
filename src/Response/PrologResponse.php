@@ -15,7 +15,7 @@ namespace ProxyAPI\Response;
  * @property float $price_single
  * @property int $period
  * @property int $count
- * @property array $list
+ * @property Proxy[] $list
  * @package ProxyAPI\Response
  */
 class PrologResponse extends Response
