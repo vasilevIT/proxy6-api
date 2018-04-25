@@ -40,7 +40,7 @@ class Proxy6 implements IProxy
      * @param int $count
      * @param int $period
      * @param int $version
-     * @return mixed
+     * @return GetPriceResponse
      */
     public function getPrice(int $count, int $period, $version = ProxyType::PROXY_TYPE_V4)
     {
@@ -56,7 +56,7 @@ class Proxy6 implements IProxy
     /**
      * @param $country
      * @param int $version
-     * @return mixed
+     * @return GetCountResponse
      */
     public function getCount($country, $version = ProxyType::PROXY_TYPE_V4)
     {
@@ -70,7 +70,7 @@ class Proxy6 implements IProxy
 
     /**
      * @param int $version
-     * @return mixed
+     * @return GetCountryResponse
      */
     public function getCountry($version = ProxyType::PROXY_TYPE_V4)
     {
@@ -84,7 +84,7 @@ class Proxy6 implements IProxy
     /**
      * @param string $state State returned proxies. Available values: active - Active, expired - Not active, expiring - Expiring, all - All (default);
      * @param string $description
-     * @return mixed
+     * @return ProxyListResponse
      */
     public function getProxy($state = "", $description = "")
     {
@@ -99,7 +99,7 @@ class Proxy6 implements IProxy
     /**
      * @param string $ids List of internal proxies
      * @param string $type Sets the type (protocol): http - HTTPS or socks - SOCKS5.
-     * @return mixed
+     * @return Response
      */
     public function setType($ids, $type)
     {
@@ -115,7 +115,7 @@ class Proxy6 implements IProxy
      * @param $new
      * @param string $old
      * @param string $ids
-     * @return mixed
+     * @return Response
      */
     public function setDescription($new, $old = "", $ids = "")
     {
@@ -135,7 +135,7 @@ class Proxy6 implements IProxy
      * @param int $version Proxies version: 4 - IPv4, 3 - IPv4 Shared, 6 - IPv6 (default);
      * @param string $type Proxies type (protocol): socks or http (default);
      * @param string $description
-     * @return mixed
+     * @return BuyResponse
      */
     public function buy($count, $period, $country, $version = ProxyType::PROXY_TYPE_V4, $type = "", $description = "")
     {
@@ -154,7 +154,7 @@ class Proxy6 implements IProxy
     /**
      * @param int $period Extension period in days;
      * @param string $ids List of internal proxies’ numbers in our system, divided by comas.
-     * @return mixed
+     * @return BuyResponse
      */
     public function prolong($period, $ids)
     {
@@ -183,7 +183,7 @@ class Proxy6 implements IProxy
 
     /**
      * @param string $ids Internal proxy number in our system.
-     * @return mixed
+     * @return CheckResponse
      */
     public function check($ids)
     {
