@@ -6,11 +6,11 @@
  * Time: 16:46
  */
 
-namespace InstagramAmAPI\Transport;
+namespace ProxyAPI\Transport;
 
 /**
  * Interface ITransport
- * @package InstagramAmAPI\Transport
+ * @package ProxyAPI\Transport
  */
 interface ITransport
 {

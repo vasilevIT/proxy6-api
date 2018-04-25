@@ -6,9 +6,17 @@
  * Time: 19:56
  */
 
-namespace ProxyAPI;
+namespace ProxyAPI\Proxy;
 
-use InstagramAmAPI\Transport\ITransport;
+use ProxyAPI\Request\Request;
+use ProxyAPI\Response\BuyResponse;
+use ProxyAPI\Response\CheckResponse;
+use ProxyAPI\Response\GetCountResponse;
+use ProxyAPI\Response\GetCountryResponse;
+use ProxyAPI\Response\GetPriceResponse;
+use ProxyAPI\Response\ProxyListResponse;
+use ProxyAPI\Response\Response;
+
 
 /**
  * Class Proxy6
@@ -16,14 +24,16 @@ use InstagramAmAPI\Transport\ITransport;
  */
 class Proxy6 implements IProxy
 {
+    /** @var  string */
+    private $api_key;
 
     /**
-     * @param ITransport $transport
-     * @return mixed
+     * @param string $api_key
+     * @return void
      */
-    public function setTransport(ITransport $transport)
+    public function setApiKey(string $api_key)
     {
-        // TODO: Implement setTransport() method.
+        $this->api_key = $api_key;
     }
 
     /**
@@ -32,9 +42,15 @@ class Proxy6 implements IProxy
      * @param int $version
      * @return mixed
      */
-    public function getPrice(int $count, int $period, $version = 4)
+    public function getPrice(int $count, int $period, $version = ProxyType::PROXY_TYPE_V4)
     {
-        // TODO: Implement getPrice() method.
+        $params = [
+            'count' => $count,
+            'period' => $period,
+            'version' => $version
+        ];
+        $response = new GetPriceResponse($this->makeRequest("/getprice/", $params));
+        return $response;
     }
 
     /**
@@ -42,18 +58,27 @@ class Proxy6 implements IProxy
      * @param int $version
      * @return mixed
      */
-    public function getCount($country, $version = 4)
+    public function getCount($country, $version = ProxyType::PROXY_TYPE_V4)
     {
-        // TODO: Implement getCount() method.
+        $params = [
+            'country' => $country,
+            'version' => $version
+        ];
+        $response = new GetCountResponse($this->makeRequest("/getcount/", $params));
+        return $response;
     }
 
     /**
      * @param int $version
      * @return mixed
      */
-    public function getCountry($version = 4)
+    public function getCountry($version = ProxyType::PROXY_TYPE_V4)
     {
-        // TODO: Implement getCountry() method.
+        $params = [
+            'version' => $version
+        ];
+        $response = new GetCountryResponse($this->makeRequest("/getcountry/", $params));
+        return $response;
     }
 
     /**
@@ -63,7 +88,12 @@ class Proxy6 implements IProxy
      */
     public function getProxy($state = "", $description = "")
     {
-        // TODO: Implement getProxy() method.
+        $params = [
+            'state' => $state,
+            'descr' => $description
+        ];
+        $response = new ProxyListResponse($this->makeRequest("/getproxy/", $params));
+        return $response;
     }
 
     /**
@@ -73,7 +103,12 @@ class Proxy6 implements IProxy
      */
     public function setType($ids, $type)
     {
-        // TODO: Implement setType() method.
+        $params = [
+            'ids' => $ids,
+            'type' => $type,
+        ];
+        $response = new Response($this->makeRequest("/settype/", $params));
+        return $response;
     }
 
     /**
@@ -84,7 +119,13 @@ class Proxy6 implements IProxy
      */
     public function setDescription($new, $old = "", $ids = "")
     {
-        // TODO: Implement setDescription() method.
+        $params = [
+            'new' => $new,
+            'old' => $old,
+            'ids' => $ids,
+        ];
+        $response = new Response($this->makeRequest("/setdescr/", $params));
+        return $response;
     }
 
     /**
@@ -98,7 +139,16 @@ class Proxy6 implements IProxy
      */
     public function buy($count, $period, $country, $version = ProxyType::PROXY_TYPE_V4, $type = "", $description = "")
     {
-        // TODO: Implement buy() method.
+        $params = [
+            'count' => $count,
+            'period' => $period,
+            'country' => $country,
+            'version' => $version,
+            'type' => $type,
+            'descr' => $description,
+        ];
+        $response = new BuyResponse($this->makeRequest("/buy/", $params));
+        return $response;
     }
 
     /**
@@ -108,17 +158,27 @@ class Proxy6 implements IProxy
      */
     public function prolong($period, $ids)
     {
-        // TODO: Implement prolong() method.
+        $params = [
+            'period' => $period,
+            'ids' => $ids,
+        ];
+        $response = new BuyResponse($this->makeRequest("/prolong/", $params));
+        return $response;
     }
 
     /**
      * @param string $ids List of internal proxies’ numbers in our system, divided by comas;
      * @param string $description Technical comment you have entered when purchasing proxy or by method setdescr.
-     * @return mixed
+     * @return Response
      */
     public function delete($ids, $description = "")
     {
-        // TODO: Implement delete() method.
+        $params = [
+            'ids' => $ids,
+            'descr' => $description,
+        ];
+        $response = new Response($this->makeRequest("/delete/", $params));
+        return $response;
     }
 
     /**
@@ -127,6 +187,24 @@ class Proxy6 implements IProxy
      */
     public function check($ids)
     {
-        // TODO: Implement check() method.
+        $params = [
+            'ids' => $ids
+        ];
+        $response = new CheckResponse($this->makeRequest("/check/", $params));
+        return $response;
+    }
+
+    /**
+     * @param $url
+     * @param $params
+     * @return array
+     */
+    public function makeRequest($url, $params)
+    {
+        $params = array_filter($params);
+        $request = new Request();
+        $request->init($this->api_key . $url, $params);
+        $response = $request->send();
+        return $response;
     }
 }
