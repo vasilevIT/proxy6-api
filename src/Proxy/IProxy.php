@@ -7,6 +7,7 @@
  */
 
 namespace ProxyAPI\Proxy;
+
 use ProxyAPI\Response\BuyResponse;
 use ProxyAPI\Response\CheckResponse;
 use ProxyAPI\Response\GetCountResponse;
@@ -54,7 +55,7 @@ interface IProxy
      * @param string $description
      * @return ProxyListResponse
      */
-    public function getProxy($state = "", $description = "");
+    public function getProxy($state = ProxyState::ALL, $description = "");
 
     /**
      * @param string $ids List of internal proxies
@@ -80,7 +81,7 @@ interface IProxy
      * @param string $description
      * @return BuyResponse
      */
-    public function buy($count, $period, $country, $version = ProxyType::PROXY_TYPE_V4, $type = "", $description = "");
+    public function buy($count, $period, $country, $version = ProxyType::PROXY_TYPE_V4, $type = ProxyType::PROXY_PROTOCOL_HTTPS, $description = "");
 
     /**
      * @param int $period Extension period in days;
