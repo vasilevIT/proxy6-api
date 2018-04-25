@@ -10,6 +10,7 @@ namespace ProxyAPI\Response;
 
 /**
  * Class GetCountResponse
+ * @property int $count
  * @package ProxyAPI\Response
  */
 class GetCountResponse extends Response
@@ -19,5 +20,6 @@ class GetCountResponse extends Response
         'user_id' => 'string',
         'balance' => 'string',
         'currency' => 'string',
+        'count' => 'int',
     ];
 }

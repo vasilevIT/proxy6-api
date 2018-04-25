@@ -12,7 +12,7 @@ namespace ProxyAPI\Response;
  * Class ProxyListResponse
  *
  * @property int $list_count
- * @property array $list
+ * @property Proxy[] $list
  * @package ProxyAPI\Response
  */
 class ProxyListResponse extends Response

@@ -12,7 +12,6 @@ use ProxyAPI\Request\Request;
 use ProxyAPI\Response\BuyResponse;
 use ProxyAPI\Response\CheckResponse;
 use ProxyAPI\Response\GetCountResponse;
-use ProxyAPI\Response\GetCountryResponse;
 use ProxyAPI\Response\GetPriceResponse;
 use ProxyAPI\Response\ProxyListResponse;
 use ProxyAPI\Response\Response;
@@ -40,7 +39,7 @@ class Proxy6 implements IProxy
      * @param int $count
      * @param int $period
      * @param int $version
-     * @return mixed
+     * @return GetPriceResponse
      */
     public function getPrice(int $count, int $period, $version = ProxyType::PROXY_TYPE_V4)
     {
@@ -56,7 +55,7 @@ class Proxy6 implements IProxy
     /**
      * @param $country
      * @param int $version
-     * @return mixed
+     * @return GetCountResponse
      */
     public function getCount($country, $version = ProxyType::PROXY_TYPE_V4)
     {
@@ -70,23 +69,23 @@ class Proxy6 implements IProxy
 
     /**
      * @param int $version
-     * @return mixed
+     * @return ProxyListResponse
      */
     public function getCountry($version = ProxyType::PROXY_TYPE_V4)
     {
         $params = [
             'version' => $version
         ];
-        $response = new GetCountryResponse($this->makeRequest("/getcountry/", $params));
+        $response = new ProxyListResponse($this->makeRequest("/getcountry/", $params));
         return $response;
     }
 
     /**
      * @param string $state State returned proxies. Available values: active - Active, expired - Not active, expiring - Expiring, all - All (default);
      * @param string $description
-     * @return mixed
+     * @return ProxyListResponse
      */
-    public function getProxy($state = "", $description = "")
+    public function getProxy($state = ProxyState::ALL, $description = "")
     {
         $params = [
             'state' => $state,
@@ -99,10 +98,11 @@ class Proxy6 implements IProxy
     /**
      * @param string $ids List of internal proxies
      * @param string $type Sets the type (protocol): http - HTTPS or socks - SOCKS5.
-     * @return mixed
+     * @return Response
      */
     public function setType($ids, $type)
     {
+        $ids = $this->filterIds($ids);
         $params = [
             'ids' => $ids,
             'type' => $type,
@@ -115,7 +115,7 @@ class Proxy6 implements IProxy
      * @param $new
      * @param string $old
      * @param string $ids
-     * @return mixed
+     * @return Response
      */
     public function setDescription($new, $old = "", $ids = "")
     {
@@ -135,9 +135,9 @@ class Proxy6 implements IProxy
      * @param int $version Proxies version: 4 - IPv4, 3 - IPv4 Shared, 6 - IPv6 (default);
      * @param string $type Proxies type (protocol): socks or http (default);
      * @param string $description
-     * @return mixed
+     * @return BuyResponse
      */
-    public function buy($count, $period, $country, $version = ProxyType::PROXY_TYPE_V4, $type = "", $description = "")
+    public function buy($count, $period, $country, $version = ProxyType::PROXY_TYPE_V4, $type = ProxyType::PROXY_PROTOCOL_HTTPS, $description = "")
     {
         $params = [
             'count' => $count,
@@ -154,10 +154,11 @@ class Proxy6 implements IProxy
     /**
      * @param int $period Extension period in days;
      * @param string $ids List of internal proxies’ numbers in our system, divided by comas.
-     * @return mixed
+     * @return BuyResponse
      */
     public function prolong($period, $ids)
     {
+        $ids = $this->filterIds($ids);
         $params = [
             'period' => $period,
             'ids' => $ids,
@@ -173,6 +174,7 @@ class Proxy6 implements IProxy
      */
     public function delete($ids, $description = "")
     {
+        $ids = $this->filterIds($ids);
         $params = [
             'ids' => $ids,
             'descr' => $description,
@@ -183,10 +185,11 @@ class Proxy6 implements IProxy
 
     /**
      * @param string $ids Internal proxy number in our system.
-     * @return mixed
+     * @return CheckResponse
      */
     public function check($ids)
     {
+        $ids = $this->filterIds($ids);
         $params = [
             'ids' => $ids
         ];
@@ -206,5 +209,13 @@ class Proxy6 implements IProxy
         $request->init($this->api_key . $url, $params);
         $response = $request->send();
         return $response;
+    }
+
+    private function filterIds($ids)
+    {
+        if (is_array($ids)) {
+            $ids = implode(',', $ids);
+        }
+        return $ids;
     }
 }
