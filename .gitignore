@@ -4,6 +4,7 @@
 
 # IntelliJ project files
 .idea
+vendor
 *.iml
 out
 gen
