@@ -6,10 +6,8 @@
  * Time: 19:53
  */
 
-namespace ProxyAPI;
+namespace ProxyAPI\Proxy;
 
-
-use InstagramAmAPI\Transport\ITransport;
 
 /**
  * Interface IProxy
@@ -17,11 +15,12 @@ use InstagramAmAPI\Transport\ITransport;
  */
 interface IProxy
 {
+
     /**
-     * @param ITransport $transport
+     * @param string $api_key
      * @return mixed
      */
-    public function setTransport(ITransport $transport);
+    public function setApiKey(string $api_key);
 
     /**
      * @param int $count
@@ -29,20 +28,20 @@ interface IProxy
      * @param int $version
      * @return mixed
      */
-    public function getPrice(int $count, int $period, $version = 4);
+    public function getPrice(int $count, int $period, $version = ProxyType::PROXY_TYPE_V4);
 
     /**
      * @param $country
      * @param int $version
      * @return mixed
      */
-    public function getCount($country, $version = 4);
+    public function getCount($country, $version = ProxyType::PROXY_TYPE_V4);
 
     /**
      * @param int $version
      * @return mixed
      */
-    public function getCountry($version = 4);
+    public function getCountry($version = ProxyType::PROXY_TYPE_V4);
 
     /**
      * @param string $state State returned proxies. Available values: active - Active, expired - Not active, expiring - Expiring, all - All (default);

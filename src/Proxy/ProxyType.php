@@ -6,7 +6,7 @@
  * Time: 20:00
  */
 
-namespace ProxyAPI;
+namespace ProxyAPI\Proxy;
 
 /**
  * Class ProxyType
@@ -17,5 +17,8 @@ class ProxyType
     const PROXY_TYPE_V4 = 4;
     const PROXY_TYPE_V4_SHARED = 3;
     const PROXY_TYPE_V6 = 6;
+
+    const PROXY_PROTOCOL_HTTPS = 'https';
+    const PROXY_PROTOCOL_SOCKS5 = 'socks';
 
 }

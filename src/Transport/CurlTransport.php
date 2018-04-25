@@ -6,11 +6,11 @@
  * Time: 16:48
  */
 
-namespace InstagramAmAPI\Transport;
+namespace ProxyAPI\Transport;
 
 /**
  * Class CurlTransport
- * @package InstagramAmAPI\Transport
+ * @package ProxyAPI\Transport
  */
 class CurlTransport implements ITransport
 {

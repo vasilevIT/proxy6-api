@@ -20,5 +20,8 @@
     "psr-4": {
       "ProxyAPI\\": "src/"
     }
+  },
+  "require": {
+    "lazyjsonmapper/lazyjsonmapper": "*"
   }
 }
