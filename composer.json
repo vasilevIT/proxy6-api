@@ -1,0 +1,24 @@
+{
+  "name": "vasilevIT/proxy6-api",
+  "description": "Proxy service API library",
+  "keywords": [
+    "proxy",
+    "proxy6",
+    "API",
+    "PHP"
+  ],
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Anton Vasiliev",
+      "email": "bysslaev@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ProxyAPI\\": "src/"
+    }
+  }
+}
