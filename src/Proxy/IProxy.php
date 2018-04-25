@@ -10,7 +10,6 @@ namespace ProxyAPI\Proxy;
 use ProxyAPI\Response\BuyResponse;
 use ProxyAPI\Response\CheckResponse;
 use ProxyAPI\Response\GetCountResponse;
-use ProxyAPI\Response\GetCountryResponse;
 use ProxyAPI\Response\GetPriceResponse;
 use ProxyAPI\Response\ProxyListResponse;
 use ProxyAPI\Response\Response;
@@ -46,7 +45,7 @@ interface IProxy
 
     /**
      * @param int $version
-     * @return GetCountryResponse
+     * @return ProxyListResponse
      */
     public function getCountry($version = ProxyType::PROXY_TYPE_V4);
 

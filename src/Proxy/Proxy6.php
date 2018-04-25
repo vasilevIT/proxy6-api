@@ -12,7 +12,6 @@ use ProxyAPI\Request\Request;
 use ProxyAPI\Response\BuyResponse;
 use ProxyAPI\Response\CheckResponse;
 use ProxyAPI\Response\GetCountResponse;
-use ProxyAPI\Response\GetCountryResponse;
 use ProxyAPI\Response\GetPriceResponse;
 use ProxyAPI\Response\ProxyListResponse;
 use ProxyAPI\Response\Response;
@@ -70,14 +69,14 @@ class Proxy6 implements IProxy
 
     /**
      * @param int $version
-     * @return GetCountryResponse
+     * @return ProxyListResponse
      */
     public function getCountry($version = ProxyType::PROXY_TYPE_V4)
     {
         $params = [
             'version' => $version
         ];
-        $response = new GetCountryResponse($this->makeRequest("/getcountry/", $params));
+        $response = new ProxyListResponse($this->makeRequest("/getcountry/", $params));
         return $response;
     }
 
