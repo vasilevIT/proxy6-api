@@ -10,6 +10,8 @@ namespace ProxyAPI\Response;
 
 /**
  * Class CheckResponse
+ * @property int $proxy_id
+ * @property bool $proxy_status
  * @package ProxyAPI\Response
  */
 class CheckResponse extends Response
@@ -20,6 +22,6 @@ class CheckResponse extends Response
         'balance' => 'string',
         'currency' => 'string',
         'proxy_id' => 'int',
-        'proxy_status' => 'boolean',
+        'proxy_status' => 'bool',
     ];
 }
