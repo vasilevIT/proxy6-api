@@ -9,6 +9,7 @@
 namespace ProxyAPI\Request;
 
 use ProxyAPI\Transport\CurlTransport;
+use ProxyAPI\Transport\GuzzleTransport;
 use ProxyAPI\Transport\ITransport;
 
 
@@ -34,7 +35,7 @@ class Request
      */
     public function __construct($data = [])
     {
-        $this->transport = new CurlTransport();
+        $this->transport = new GuzzleTransport();
         $this->data = $data;
         $this->headers = false;
     }
@@ -169,16 +170,6 @@ class Request
         $this->preRequest();
         $this->initHeaders();
         $result = $this->transport->send();
-        $http_code = $this->transport->getRequestInfo()['http_code'];
-        switch ($http_code) {
-            case 200:
-//                ok
-                break;
-            default:
-                throw new \Exception("Http code: {$http_code}");
-                break;
-
-        }
         $this->postRequest();
         $result = json_decode($result, true);
         return $result;

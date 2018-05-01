@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $api->setApiKey($_POST['api_key']);
     $response = $api->getProxy();
     echo "<pre>";
+    var_dump($response);
     print_r($response);
 }
 
