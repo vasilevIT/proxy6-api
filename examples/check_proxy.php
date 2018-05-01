@@ -6,13 +6,20 @@
  * Time: 20:02
  */
 
+require_once __DIR__ . "/autoload.php";
+
 use ProxyAPI\ProxyAPIFactory;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $factory = new ProxyAPIFactory();
     $api = $factory->createProxyApi('proxy6');
     $api->setApiKey($_POST['api_key']);
-    $response = $api->check($_POST['proxy']);
+    try {
+        $response = $api->check($_POST['proxy']);
+    } catch(\Exception $e) {
+        var_dump($e->getMessage());
+        var_dump($e->getTraceAsString());
+    }
     echo "<pre>";
     print_r($response);
 }
@@ -24,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Check proxy</title>
 </head>
 <body>
-<form>
+<form method="post">
     <div>
         <label>
             Proxy
