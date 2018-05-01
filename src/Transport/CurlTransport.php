@@ -8,6 +8,8 @@
 
 namespace ProxyAPI\Transport;
 
+use ProxyAPI\Exception\ApiException;
+
 /**
  * Class CurlTransport
  * @package ProxyAPI\Transport
@@ -95,10 +97,22 @@ class CurlTransport implements ITransport
     /**
      * Выполняет запрос
      * @return mixed
+     * @throws ApiException
      */
     public function send()
     {
-        return curl_exec($this->curl);
+        $response = curl_exec($this->curl);
+        $http_code = curl_getinfo($this->curl)['http_code'];
+        switch ($http_code) {
+            case 200:
+//                ok
+                break;
+            default:
+                throw new ApiException("Http code: {$http_code}");
+                break;
+
+        }
+        return $response;
     }
 
     public function init()
@@ -119,5 +133,10 @@ class CurlTransport implements ITransport
     public function getRequestInfo()
     {
         return curl_getinfo($this->curl);
+    }
+
+    public function addAttachment($attachment)
+    {
+        // TODO: Implement addAttachment() method.
     }
 }
