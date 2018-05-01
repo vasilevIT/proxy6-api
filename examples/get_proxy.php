@@ -6,6 +6,7 @@
  * Time: 21:06
  */
 
+ini_set('display_errors', true);
 require_once __DIR__ . "/autoload.php";
 
 use ProxyAPI\ProxyAPIFactory;
@@ -14,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $factory = new ProxyAPIFactory();
     $api = $factory->createProxyApi('proxy6');
     $api->setApiKey($_POST['api_key']);
-    $response = $api->getProxy();
+    $response = $api->getProxy(\ProxyAPI\Proxy\ProxyState::ACTIVE);
     echo "<pre>";
-    var_dump($response);
+    var_dump($response->list);
     print_r($response);
 }
 

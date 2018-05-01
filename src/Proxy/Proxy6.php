@@ -84,7 +84,14 @@ class Proxy6 implements IProxy
         $params = [
             'version' => $version
         ];
-        $response = new ProxyListResponse($this->makeRequest("/getcountry/", $params));
+        $data = $this->makeRequest("/getcountry/", $params);
+        $i = 0;
+        foreach ($data['list'] as $key => $value) {
+            $data['list'][$i] = $value;
+            unset($data['list'][$key]);
+            $i++;
+        }
+        $response = new ProxyListResponse($data);
         return $response;
     }
 
@@ -99,7 +106,14 @@ class Proxy6 implements IProxy
             'state' => $state,
             'descr' => $description
         ];
-        $response = new ProxyListResponse($this->makeRequest("/getproxy/", $params));
+        $data = $this->makeRequest("/getproxy/", $params);
+        $i = 0;
+        foreach ($data['list'] as $key => $value) {
+            $data['list'][$i] = $value;
+            unset($data['list'][$key]);
+            $i++;
+        }
+        $response = new ProxyListResponse($data);
         return $response;
     }
 
