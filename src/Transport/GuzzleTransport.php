@@ -12,14 +12,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use ProxyAPI\Exception\ApiException;
-use ProxyAPI\Exception\NoMoneyException;
 use ProxyAPI\Exception\NotFoundException;
-use ProxyAPI\Exception\ProxyNotAllowException;
-use ProxyAPI\Exception\UnknownErrorException;
-use ProxyAPI\Exception\WrongKeyException;
-use ProxyAPI\Exception\WrongMethodException;
-use ProxyAPI\Exception\WrongParamsException;
-use ProxyAPI\Exception\WrongPriceException;
+use ProxyAPI\Proxy\Proxy6;
 
 /**
  * Class GuzzleTransport
@@ -128,50 +122,7 @@ class GuzzleTransport implements ITransport
             if (!is_null($body)) {
                 if (isset($body['error_id']) && !empty($body['error_id'])) {
                     $error_id = (int)$body['error_id'];
-                    switch ($error_id) {
-                        case 30:
-                            throw new UnknownErrorException("Unknown error.");
-                            break;
-                        case 100:
-                            throw new WrongKeyException("Authorization error, wrong key.");
-                            break;
-                        case 110:
-                            throw new WrongMethodException("Wrong method.");
-                            break;
-                        case 200:
-                            throw new WrongParamsException("Wrong proxies quantity, wrong amount or no quantity input.");
-                            break;
-                        case 210:
-                            throw new WrongParamsException("Period error, wrong period input (days) or no input.");
-                            break;
-                        case 220:
-                            throw new WrongParamsException("Country error, wrong country input (iso2 for country input) or no input.");
-                            break;
-                        case 230:
-                            throw new WrongParamsException("Error of the list of the proxy numbers. Proxy numbers have to divided with comas.");
-                            break;
-                        case 250:
-                            throw new WrongParamsException("Tech description error.");
-                            break;
-                        case 260:
-                            throw new WrongParamsException("Proxy type (protocol) error. Incorrect or missing.");
-                            break;
-                        case 300:
-                            throw new ProxyNotAllowException("Proxy amount error. Appears after attempt of purchase of more proxies than available on the service.");
-                            break;
-                        case 400:
-                            throw new NoMoneyException("Balance error. Zero or low balance on your account.");
-                            break;
-                        case 404:
-                            throw new NotFoundException("Element error. The requested item was not found.");
-                            break;
-                        case 410:
-                            throw new WrongPriceException("Error calculating the cost. The total cost is less than or equal to zero.");
-                            break;
-
-                        default:
-                            break;
-                    }
+                    Proxy6::checkError($error_id);
                 }
             }
             switch ($e->getCode()) {
