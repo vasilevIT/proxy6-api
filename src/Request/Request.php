@@ -20,7 +20,7 @@ use ProxyAPI\Transport\ITransport;
 class Request
 {
     /** @var string  */
-    protected $base_url = "https://1.proxy6.net/api/";
+    protected $base_url = "http://1.proxy6.net/api/";
 
     /** @var  ITransport */
     protected $transport;
