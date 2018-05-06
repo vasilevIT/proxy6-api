@@ -3,7 +3,7 @@ Library for working with proxy service
 * proxy6.net
 
 ### Version
-Current version 0.1.6
+Current version 0.1.7
 
 ## Install via composer
 
