@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use ProxyAPI\Exception\ApiException;
+use ProxyAPI\Exception\NoMoneyException;
 use ProxyAPI\Exception\NotFoundException;
 use ProxyAPI\Proxy\Proxy6;
 
@@ -129,6 +130,8 @@ class GuzzleTransport implements ITransport
                 case 200:
 //                ok
                     break;
+                case 400:
+                    throw new NoMoneyException("NoMoney.");
                 case 404:
                     throw new NotFoundException("NotFound.");
                 default:

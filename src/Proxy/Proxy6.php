@@ -169,7 +169,14 @@ class Proxy6 implements IProxy
             'type' => $type,
             'descr' => $description,
         ];
-        $response = new BuyResponse($this->makeRequest("/buy/", $params));
+        $data = $this->makeRequest("/buy/", $params);
+        $i = 0;
+        foreach ($data['list'] as $key => $value) {
+            $data['list'][$i] = $value;
+            unset($data['list'][$key]);
+            $i++;
+        }
+        $response = new BuyResponse($data);
         return $response;
     }
 
